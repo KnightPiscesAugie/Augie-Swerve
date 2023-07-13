@@ -38,9 +38,10 @@ public class SwerveModule {
   private final TalonFX m_steerMotor;
   private final CANcoder m_steerEncoder;
   private final Rotation2d m_steerEncoderOffset;
-private CTREConfigs steerEncoderConfig = new ctreConfigs;
+private CTREConfigs configThingy = new CTREConfigs();
+
   ShuffleboardTab debugInfo;
-  /**
+  /**z
    * The target wheel angle in rotations. [-.5, .5]
    */
   private double m_desiredSteerAngle;
@@ -79,15 +80,12 @@ private CTREConfigs steerEncoderConfig = new ctreConfigs;
     // com.ctre.phoenix.motorcontrol.can.TalonFX testmotor = new com.ctre.phoenix.motorcontrol.can.TalonFX(1);
    
 
-    CANcoderConfiguration steerEncoderConfig = ctreConfig.steerEncoderConfig;
-    TalonFXConfiguration steerMotorConfig = ctreConfig.steerMotorConfig;
-
-    steerEncoderConfig.MagnetSensor.MagnetOffset = -m_steerEncoderOffset.getRotations();
-    steerMotorConfig.Feedback.FeedbackRemoteSensorID = steerEncoderChannel;
+    configThingy.steerEncoderConfig.MagnetSensor.MagnetOffset = -m_steerEncoderOffset.getRotations();
+    configThingy.steerMotorConfig.Feedback.FeedbackRemoteSensorID = steerEncoderChannel;
     // Apply the configurations.
-    m_driveMotor.getConfigurator().apply(ctreConfig.driveMotorConfig);
-    m_steerMotor.getConfigurator().apply(steerMotorConfig);
-    m_steerEncoder.getConfigurator().apply(steerEncoderConfig);
+    m_driveMotor.getConfigurator().apply(configThingy.driveMotorConfig);
+    m_steerMotor.getConfigurator().apply(configThingy.steerMotorConfig);
+    m_steerEncoder.getConfigurator().apply(configThingy.steerEncoderConfig);
     }
 
   static class GyroView implements Sendable {

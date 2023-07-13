@@ -239,7 +239,8 @@ public static final class CTREConfigs {
       pigeon2Config = new Pigeon2Configuration();
 
       // Steer motor.
-      steerMotorConfig.Feedback.RotorToSensorRatio = 1/DriveConstants.DRIVETRAIN_STEER_REDUCTION;
+      steerMotorConfig.Feedback.
+      RotorToSensorRatio = 1/DriveConstants.DRIVETRAIN_STEER_REDUCTION;
       steerMotorConfig.MotorOutput.Inverted = DriveConstants.DRIVETRAIN_STEER_INVERTED;
       // steerMotorConfig.MotorOutput.DutyCycleNeutralDeadband = 0.05;
       steerMotorConfig.Slot0.kP = DriveConstants.k_STEER_P;
