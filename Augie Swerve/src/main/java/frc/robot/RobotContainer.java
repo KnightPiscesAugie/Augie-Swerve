@@ -5,13 +5,13 @@
 package frc.robot;
 
 
-import static frc.robot.Constants.PS4Driver.DEADBAND_LARGE;
-import static frc.robot.Constants.PS4Driver.DEADBAND_NORMAL;
-import static frc.robot.Constants.PS4Driver.NO_INPUT;
-import static frc.robot.Constants.PS4Driver.X_AXIS;
-import static frc.robot.Constants.PS4Driver.Y_AXIS;
-import static frc.robot.Constants.PS4Driver.Z_AXIS;
-import static frc.robot.Constants.PS4Driver.Z_ROTATE;
+import static frc.robot.settings.Constants.PS4Driver.DEADBAND_LARGE;
+import static frc.robot.settings.Constants.PS4Driver.DEADBAND_NORMAL;
+import static frc.robot.settings.Constants.PS4Driver.NO_INPUT;
+import static frc.robot.settings.Constants.PS4Driver.X_AXIS;
+import static frc.robot.settings.Constants.PS4Driver.Y_AXIS;
+import static frc.robot.settings.Constants.PS4Driver.Z_AXIS;
+import static frc.robot.settings.Constants.PS4Driver.Z_ROTATE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,10 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
-
-
-import frc.robot.Constants;
-
+import frc.robot.settings.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
@@ -66,6 +63,8 @@ public class RobotContainer {
     () -> modifyAxis(-driveController.getRawAxis(X_AXIS), DEADBAND_NORMAL), 
     () -> modifyAxis(-driveController.getRawAxis(Z_AXIS), DEADBAND_NORMAL));
     drivetrain.setDefaultCommand(defaultDriveCommand);
+    SmartDashboard.putBoolean("use limelight", false);
+    SmartDashboard.putBoolean("trust limelight", false);
     autoInit();
     // Configure the trigger bindings
     configureBindings();
@@ -77,6 +76,19 @@ public class RobotContainer {
     eventMap.put("stop", new InstantCommand (drivetrain::stop, drivetrain));
     //autos.autoInit(autoChooser, eventMap, drivetrain);
     SmartDashboard.putData(autoChooser);
+  }
+  private double getJoystickDegrees(int horizontalAxis, int verticalAxis) {
+    double xAxis = MathUtil.applyDeadband(-driveController.getRawAxis(horizontalAxis), DEADBAND_LARGE);
+    double yAxis = MathUtil.applyDeadband(-driveController.getRawAxis(verticalAxis), DEADBAND_LARGE);
+    if (xAxis + yAxis != 0) {
+      return Math.toDegrees(Math.atan2(xAxis, yAxis));
+    }
+    return NO_INPUT;
+  }
+  private double getJoystickMagnitude(int horizontalAxis, int verticalAxis) {
+    double xAxis = MathUtil.applyDeadband(-driveController.getRawAxis(horizontalAxis), DEADBAND_LARGE);
+    double yAxis = MathUtil.applyDeadband(-driveController.getRawAxis(verticalAxis), DEADBAND_LARGE);
+    return Math.min(1.0, (Math.sqrt(Math.pow(xAxis, 2) + Math.pow(yAxis, 2))));
   }
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the

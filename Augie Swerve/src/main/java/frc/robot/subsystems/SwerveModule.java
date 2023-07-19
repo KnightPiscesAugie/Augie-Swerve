@@ -29,8 +29,8 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.CTREConfigs;
+import frc.robot.settings.Constants.CTREConfigs;
+import frc.robot.settings.Constants.DriveConstants;
 
 public class SwerveModule {
 

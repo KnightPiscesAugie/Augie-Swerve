@@ -23,8 +23,10 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.LimelightHelpers;
+import frc.robot.settings.Constants;
+import frc.robot.settings.LimelightValues;
+import frc.robot.settings.Constants.DriveConstants;
 public class DrivetrainSubsystem extends SubsystemBase {
   public SwerveDriveKinematics kinematics = Constants.DriveConstants.kinematics;
   private final com.ctre.phoenixpro.hardware.Pigeon2 pigeon = new com.ctre.phoenixpro.hardware.Pigeon2(Constants.DriveConstants.DRIVETRAIN_PIGEON_ID, Constants.DriveConstants.CANIVORE_DRIVETRAIN);
@@ -156,7 +158,15 @@ public void updateOdometryWithVision(Pose2d estimatedPose, double timeStampSecon
   public void periodic() {
     // This method will be called once per scheduler run
     updateOdometry();
-    
+    if (SmartDashboard.getBoolean("use limelight", false)){
+      LimelightValues visionData = new LimelightValues(LimelightHelpers.getLatestResults("").targetingResults, LimelightHelpers.getTV(""));
+      Boolean isVisionValid = visionData.isResultValid;
+      Boolean isVisionTrustworthy = isVisionValid && visionData.isPoseTrustworthy(odometer.getEstimatedPosition());
+      SmartDashboard.putBoolean("visionValid", isVisionTrustworthy);
+      if (isVisionTrustworthy || ((SmartDashboard.getBoolean("trust limelight", false)) && isVisionValid)) {
+        updateOdometryWithVision(visionData.getBotPose(), visionData.gettimestamp());
+      }
+    }
     m_Field2d.setRobotPose(odometer.getEstimatedPosition());
     SmartDashboard.putNumber("Robot Angle", getGyroscopeRotation().getDegrees());
     SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
