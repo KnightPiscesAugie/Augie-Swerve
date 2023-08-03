@@ -56,6 +56,7 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     eventMap = new HashMap<>();
     drivetrain = new DrivetrainSubsystem();
+
     defaultDriveCommand = new Drive(
       drivetrain, 
     () -> driveController.getL1Button(), 
@@ -77,19 +78,7 @@ public class RobotContainer {
     //autos.autoInit(autoChooser, eventMap, drivetrain);
     SmartDashboard.putData(autoChooser);
   }
-  private double getJoystickDegrees(int horizontalAxis, int verticalAxis) {
-    double xAxis = MathUtil.applyDeadband(-driveController.getRawAxis(horizontalAxis), DEADBAND_LARGE);
-    double yAxis = MathUtil.applyDeadband(-driveController.getRawAxis(verticalAxis), DEADBAND_LARGE);
-    if (xAxis + yAxis != 0) {
-      return Math.toDegrees(Math.atan2(xAxis, yAxis));
-    }
-    return NO_INPUT;
-  }
-  private double getJoystickMagnitude(int horizontalAxis, int verticalAxis) {
-    double xAxis = MathUtil.applyDeadband(-driveController.getRawAxis(horizontalAxis), DEADBAND_LARGE);
-    double yAxis = MathUtil.applyDeadband(-driveController.getRawAxis(verticalAxis), DEADBAND_LARGE);
-    return Math.min(1.0, (Math.sqrt(Math.pow(xAxis, 2) + Math.pow(yAxis, 2))));
-  }
+
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary

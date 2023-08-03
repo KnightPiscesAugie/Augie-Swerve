@@ -158,15 +158,15 @@ public void updateOdometryWithVision(Pose2d estimatedPose, double timeStampSecon
   public void periodic() {
     // This method will be called once per scheduler run
     updateOdometry();
-    if (SmartDashboard.getBoolean("use limelight", false)){
-      LimelightValues visionData = new LimelightValues(LimelightHelpers.getLatestResults("").targetingResults, LimelightHelpers.getTV(""));
-      Boolean isVisionValid = visionData.isResultValid;
-      Boolean isVisionTrustworthy = isVisionValid && visionData.isPoseTrustworthy(odometer.getEstimatedPosition());
-      SmartDashboard.putBoolean("visionValid", isVisionTrustworthy);
-      if (isVisionTrustworthy || ((SmartDashboard.getBoolean("trust limelight", false)) && isVisionValid)) {
-        updateOdometryWithVision(visionData.getBotPose(), visionData.gettimestamp());
-      }
-    }
+     if (SmartDashboard.getBoolean("use limelight", false)){
+       LimelightValues visionData = new LimelightValues(LimelightHelpers.getLatestResults("").targetingResults, LimelightHelpers.getTV(""));
+       Boolean isVisionValid = visionData.isResultValid;
+       Boolean isVisionTrustworthy = isVisionValid && visionData.isPoseTrustworthy(odometer.getEstimatedPosition());
+       SmartDashboard.putBoolean("visionValid", isVisionTrustworthy);
+       if (isVisionTrustworthy || ((SmartDashboard.getBoolean("trust limelight", false)) && isVisionValid)) {
+         updateOdometryWithVision(visionData.getBotPose(), visionData.gettimestamp());
+       }
+     }
     m_Field2d.setRobotPose(odometer.getEstimatedPosition());
     SmartDashboard.putNumber("Robot Angle", getGyroscopeRotation().getDegrees());
     SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
