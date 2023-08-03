@@ -132,16 +132,17 @@ public void drive(ChassisSpeeds chassisSpeeds) {
   } else {
     setModuleStates(desiredStates);
   }
+  SmartDashboard.putNumber("Checkpoint 2", desiredStates[0].speedMetersPerSecond);
 }
 public void stop() {
   for (int i = 0; i < 4; i++) {
     modules[i].setDesiredState(new SwerveModuleState(0, lastAngles[i]));
   }
 }
-public void setModuleStates(SwerveModuleState[] desiredState) {
-  SwerveDriveKinematics.desaturateWheelSpeeds(desiredState, DriveConstants.MAX_VELOCITY_METERS_PER_SECOND);
+public void setModuleStates(SwerveModuleState[] desiredStates) {
+  SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.MAX_VELOCITY_METERS_PER_SECOND);
   for (int i = 0; i < 4; i++) {
-    modules[i].setDesiredState(new SwerveModuleState(0, lastAngles[i]));
+    setModule(i, desiredStates[i]);;
   } 
 }
 public void setModule(int i, SwerveModuleState desiredState) {
