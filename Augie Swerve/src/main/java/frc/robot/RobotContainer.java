@@ -18,6 +18,7 @@ import java.util.Map;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,6 +48,7 @@ public class RobotContainer {
   private final PS4Controller driveController;
   private Autos autos; 
   public static HashMap<String, Command> eventMap;
+  private Field2d Field;
   // Replace with CommandPS4Controller or CommandJoystick if needed
   
 
@@ -77,6 +79,8 @@ public class RobotContainer {
     eventMap.put("stop", new InstantCommand (drivetrain::stop, drivetrain));
     //autos.autoInit(autoChooser, eventMap, drivetrain);
     SmartDashboard.putData(autoChooser);
+    Field2d Field  = drivetrain.m_Field2d;
+    SmartDashboard.putData("Field", Field);
   }
 
   /**

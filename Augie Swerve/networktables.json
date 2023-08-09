@@ -1,0 +1,34 @@
+[
+  {
+    "name": "/Preferences/FL",
+    "type": "string",
+    "value": "FL",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/FR",
+    "type": "string",
+    "value": "FR",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/BL",
+    "type": "string",
+    "value": "BL",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/BR",
+    "type": "string",
+    "value": "BR",
+    "properties": {
+      "persistent": true
+    }
+  }
+]

@@ -33,7 +33,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final SwerveModule[] modules;
   private final Rotation2d[] lastAngles;
   private final SwerveDrivePoseEstimator odometer;
-  private final Field2d m_Field2d = new Field2d();
+  public final Field2d m_Field2d = new Field2d();
   /** Creates a new DrivetrainSubsystem. */
   public DrivetrainSubsystem() {
     Preferences.initString("FL", "FL");
