@@ -40,6 +40,7 @@ public class Drive extends CommandBase{
                 rotationSupplier.getAsDouble() * DriveConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND, drivetrain.getGyroscopeRotation()));
                 SmartDashboard.putNumber("Translation X-F", translationXSupplier.getAsDouble());
         }
+        
     }
     @Override
     public void end(boolean interuppted){
